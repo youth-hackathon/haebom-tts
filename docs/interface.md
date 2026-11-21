@@ -56,6 +56,7 @@ artemis는 원래 기기에서 화면을 직접 읽고(화면 계층 XML과 스�
 | `elapsed_s` | 세션을 시작한 뒤 지난 시간(초) |
 | `event` | 직전에 안내한 동작이 어떻게 끝났는지. 아래 표 |
 | `event_detail` | 그 설명. 영어 한 문장이고 모델이 그대로 읽는다. 없으면 빈 글자 |
+| `facts` | (없어도 됨) 폰이 시스템에서 직접 읽은 설정값. `font_scale`(글자 크기 배율), `brightness`, `media_volume`, `ring_volume`, `dark_mode`, `airplane_mode`, `next_alarm`(다음 알람이 울리는 시각 `"08:00"`, 없으면 빈 글자). 권한을 묻지 않고 읽을 수 있는 값만 보낸다. artemis 서버는 쓰지 않는다. 매뉴얼 서버(haebom-manual)는 화면으로 구별할 수 없는 완료(글자가 커졌는지, 알람이 맞춰졌는지)를 이것으로 판단한다 |
 | `screen.package` | 앞에 떠 있는 앱의 패키지 이름 |
 | `screen.width`, `screen.height` | 화면 크기(픽셀). XML의 좌표와 응답의 좌표가 이 크기 기준이다 |
 | `screen.element_count` | 앱이 센 화면 요소의 수. 서버는 쓰지 않는다 |
