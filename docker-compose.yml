@@ -7,5 +7,11 @@ services:
     environment:
       # 읽는 엔진의 기본값. baseline은 요청에 "engine": "baseline"을 적으면 언제나 고를 수 있다
       TTS_ENGINE: ${TTS_ENGINE:-baseline}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_TTS_MODEL: ${GEMINI_TTS_MODEL:-gemini-3.8-flash-tts}
+      GEMINI_STT_MODEL: ${GEMINI_STT_MODEL:-gemini-3.5-transcribe}
+      GEMINI_LIVE_STT_MODEL: ${GEMINI_LIVE_STT_MODEL:-gemini-3.5-transcribe-live}
+      GEMINI_VOICE: ${GEMINI_VOICE:-Kore}
+      GEMINI_TIMEOUT_SECONDS: ${GEMINI_TIMEOUT_SECONDS:-60}
     ports:
       - "127.0.0.1:8766:8766"

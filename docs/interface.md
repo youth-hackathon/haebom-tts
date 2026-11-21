@@ -311,3 +311,30 @@ TTS 서버도 엔진을 여럿 가질 수 있고 요청이 이름으로 고릅�
 - 앱은 설정에서 엔진을 고를 수 있습니다(기본은 "서버가 정한 대로"이고 이때는 `engine`을 보내지 않습니다).
 
 `tts/check.py`가 이 약속을 검사합니다.
+
+
+## 음성 파일과 STT 서버
+
+TTS 서버에 한국어 전사 API를 추가했습니다. 기존 TTS 요청·성공 응답은 유지합니다.
+
+| 주소 | 요청 | 성공 응답 |
+|---|---|---|
+| `POST /stt` | `multipart/form-data`의 `file` 필드에 MP4 또는 음성 파일 하나 | 200 JSON `{"text":"인식한 문장","language":"ko-KR"}` |
+
+STT는 전체 요청 20MiB, 미디어 120초까지 받으며, 영상의 첫 번째 음성 트랙을 전사합니다. 파일이 잘못됐거나 음성이 없으면 400, 크기 초과는 413, Gemini 키 미설정은 503, 외부 서비스 실패는 502와 `{"error":"..."}`를 반환합니다. TTS의 1.5초 제한은 앱의 TTS 동작에 관한 것으로 STT 제한을 뜻하지 않습니다. 이 저장소에는 STT를 부르는 앱 코드는 없습니다.
+
+`gemini` TTS 엔진과 STT 설정·예시는 [`speech-api.md`](speech-api.md)에 있습니다.
+
+
+## 앱과 스트리밍 음성 서버
+
+기존 `/tts`·파일 `/stt`의 요청과 응답은 유지합니다. 다음 경로는 스트리밍을 지원하도록 수정한 앱에서 선택해 사용합니다. 위의 기존 `Speaker.kt` 규약이 자동으로 바뀐 것은 아니며, 다른 저장소의 앱 수정은 별도입니다.
+
+| 주소 | 요청 | 응답 |
+|---|---|---|
+| `POST /tts/stream` | `{"text":"문장"}` | NDJSON `audio` 조각과 `done` 또는 `error` |
+| WebSocket `/stt/live` | `start` → PCM 바이너리 → `stop` | `status`, `started`, `interim`, `final`, `done`, `error` JSON |
+
+TTS 조각은 base64로 감싼 24kHz mono PCM16 LE이고, STT 입력은 16kHz mono PCM16 LE입니다. 둘 다 WAV 헤더를 붙이지 않습니다. 앱은 TTS 조각부터 재생하고 STT 녹음 중부터 전송합니다. 기존의 “1.5초 안에 음성 파일 전체 수신” 마감은 이 경로의 전체 스트림 마감으로 사용하지 않습니다.
+
+메시지의 정확한 필드·순서·오류·제한은 [`streaming-api.md`](streaming-api.md), Android 연결 작업은 [`android-streaming.md`](android-streaming.md)를 따릅니다.

@@ -1,0 +1,26 @@
+{
+  "url": "http://127.0.0.1:8766",
+  "input_text": "안녕하세요. 해봄입니다. 설정 버튼을 눌러 주세요.",
+  "tts": {
+    "first_audio_seconds": 1.306,
+    "last_audio_seconds": 2.111,
+    "complete_seconds": 2.167,
+    "audio_seconds": 3.96,
+    "audio_chunks": 59
+  },
+  "live_ready_seconds": 0.459,
+  "live_stt": [
+    {
+      "first_text_seconds": 1.204,
+      "final_after_stop_seconds": 0.382,
+      "interim_events": 7,
+      "text": "안녕하세요, 해봄입니다. 설정 버튼을 눌러주세요."
+    },
+    {
+      "first_text_seconds": 1.203,
+      "final_after_stop_seconds": 0.343,
+      "interim_events": 7,
+      "text": "안녕하세요, 해봄입니다. 설정 버튼을 눌러주세요."
+    }
+  ]
+}
