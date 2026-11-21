@@ -1,0 +1,11 @@
+# 로컬에서 띄운다: docker compose up -d --build     →  http://127.0.0.1:8766
+# 에뮬레이터나 USB로 연결한 폰에서는 adb reverse tcp:8766 tcp:8766 으로 닿는다.
+services:
+  tts:
+    build:
+      context: .
+    environment:
+      # 읽는 엔진의 기본값. baseline은 요청에 "engine": "baseline"을 적으면 언제나 고를 수 있다
+      TTS_ENGINE: ${TTS_ENGINE:-baseline}
+    ports:
+      - "127.0.0.1:8766:8766"

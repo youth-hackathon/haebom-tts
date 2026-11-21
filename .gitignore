@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.env
+# 검사 도구가 남기는 소리 파일. 표(result.json, result.csv)만 저장소에 둔다
+runs/
+results/**/*.wav
+results/**/*.mp3
+results/**/*.ogg
+results/**/*.audio
